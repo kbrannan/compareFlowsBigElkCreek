@@ -71,7 +71,7 @@ gi.chr <- gi.chr[-grep("\\*{1,}",gi.chr)]
 ## Get pls nums and names use fixed format to get info
 tmp.pls00 <- data.frame(ls="PERLND",num=gsub(" ","",substr(gi.chr,start=1,stop=5)),name=gsub("^ {1,} ","",substr(gi.chr,start=11,stop=30)), stringsAsFactors=FALSE)
 ##tmp.pls00$name <- gsub("^Sub[0-9]{2}","",tmp.pls00$name)
-tmp.pls00$name <- gsub(" [0-1]*","",gsub(".*Sub [0-9]{2} ","",gi.chr))
+tmp.pls00$name <- gsub(" [0-9]*","",gsub(".*Sub [0-9]{2} ","",gi.chr))
 ## clean up
 rm(list=ls(pattern="^gi\\.."))
 ## get impland info
@@ -117,7 +117,7 @@ df.areas$name <- gsub(" ","",df.areas$name)
 tmp.name <- merge(summaryBy(area ~ name+src, data=df.areas[with(df.areas, src=="hyd" & ls=="PERLND"),],FUN=sum),summaryBy(area ~ name+src, data=df.areas[with(df.areas, src=="wq" & ls=="PERLND"),],FUN=sum),by="name")
 tmp.name <- cbind(tmp.name,diff=tmp.name$area.sum.y-tmp.name$area.sum.x,per.diff=((tmp.name$area.sum.y-tmp.name$area.sum.x)/tmp.name$area.sum.x)*100)
 ## areas by general PLS category
-tmp.sub <- merge(summaryBy(area ~ sub+src, data=df.areas[with(df.areas, src=="hyd" & ls=="PERLND"),],FUN=sum),tmp.wq  <- summaryBy(area ~ sub+src, data=df.areas[with(df.areas, src=="wq" & ls=="PERLND"),],FUN=sum),by="sub")
+tmp.sub <- merge(summaryBy(area ~ sub+src, data=df.areas[with(df.areas, src=="hyd" & ls=="PERLND"),],FUN=sum),summaryBy(area ~ sub+src, data=df.areas[with(df.areas, src=="wq" & ls=="PERLND"),],FUN=sum),by="sub")
 tmp.sub$sub <- as.numeric(tmp.sub$sub)
 tmp.sub <- tmp.sub[order(tmp.sub$sub),]
 tmp.sub <- cbind(tmp.sub,diff=tmp.sub$area.sum.y-tmp.sub$area.sum.x,per.diff=((tmp.sub$area.sum.y-tmp.sub$area.sum.x)/tmp.sub$area.sum.x)*100)
